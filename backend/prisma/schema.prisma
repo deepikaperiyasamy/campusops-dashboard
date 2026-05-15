@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("STAFF") // ADMIN, STAFF
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Server {
+  id        String   @id @default(uuid())
+  name      String
+  ip        String   @unique
+  status    String   @default("ONLINE") // ONLINE, OFFLINE
+  cpuUsage  Float    @default(0)
+  ramUsage  Float    @default(0)
+  diskUsage Float    @default(0)
+  uptime    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Device {
+  id        String   @id @default(uuid())
+  name      String
+  type      String   // LAB_PC, ATTENDANCE_MACHINE, SENSOR
+  location  String
+  status    String   @default("ONLINE")
+  lastSeen  DateTime @default(now())
+}
+
+model Alert {
+  id        String   @id @default(uuid())
+  type      String   // WARNING, CRITICAL, INFO
+  message   String
+  source    String   // SERVER, DEVICE, POWER
+  isResolved Boolean @default(false)
+  createdAt DateTime @default(now())
+}
+
+model PowerMetric {
+  id          String   @id @default(uuid())
+  building    String
+  consumption Float    // in kWh
+  voltage     Float    // in V
+  timestamp   DateTime @default(now())
+}

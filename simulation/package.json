@@ -1,0 +1,13 @@
+{
+  "name": "simulation",
+  "version": "1.0.0",
+  "description": "Smart Campus Data Simulation Service",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.4"
+  }
+}
